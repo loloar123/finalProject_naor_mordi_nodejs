@@ -68,6 +68,7 @@ router.delete("/:idDel", async (req,res) => {
     }
 })
 
+// Add to cart(Button)
 router.put("/:productId", auth , async(req,res) => {
     let productId = req.params.productId;
     let plusArr = await ProductModel.findOne({_id:productId});
