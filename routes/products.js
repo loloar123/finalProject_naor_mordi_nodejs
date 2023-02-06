@@ -27,7 +27,6 @@ router.post('/', auth , async(req,res) => {
   }
 })
 
-// Add to cart(Button)
 router.put("/:id", auth, async(req,res) => {
   if(req.tokenData.role != "admin"){
     return res.status(400).json({msg:"Your not an admin!"});
