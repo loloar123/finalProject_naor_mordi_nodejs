@@ -1,6 +1,5 @@
 const express= require("express");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const {UserModel,validateUser, validateLogin,createToken} = require("../models/userModel");
 const auth = require("../middlewares/auth");
 
@@ -8,6 +7,8 @@ const router = express.Router();
 
 // מאזין לכניסה לראוט של העמוד בית לפי מה שנקבע לראוטר
 // בקובץ הקונפיג
+
+// add an auth to detect wich user is entering the get request
 router.get("/", async(req,res) => {
   res.json({msg:"Users end point , docs: ..."});
 })

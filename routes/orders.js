@@ -1,6 +1,8 @@
 const express = require('express');
 const  auth  = require('../middlewares/auth');
 const { OrderModel, validateOrder } = require('../models/orderModel');
+const { ProductModel } = require('../models/productModel');
+const { UserModel } = require('../models/userModel');
 const router = express.Router();
 
 router.get("/:id", async(req,res) => {
@@ -27,16 +29,21 @@ router.post("/", auth , async(req,res)=>{
     }
     try{
         let order = new OrderModel(req.body);
-        order.name = req.tokenData.name;
-        order.user_id = req.tokenData._id;
+        let user = await UserModel.findOne({_id:req.tokenData._id});
+        
+        order.name = user.name;
+        order.user_id = user._id;
+        
+        // לא לשמור בטוקן את המספר טלפון ולא כתובת, לשלןף דרך היוזר איי די את המידע הרגיש של המשתמש
+        // להתמש דרך היוזר איי די
         if(order.phone == "" || order.phone == null){
-            order.phone = req.tokenData.phone;
+            order.phone = user.phone;
         }
         if(order.city == "" || order.city == null){
-            order.city = req.tokenData.city;
+            order.city = user.city;
         }
         if(order.address == "" || order.address == null){
-            order.address = req.tokenData.address;
+            order.address = user.address;
         }
         await order.save();
         res.json(order);
@@ -61,5 +68,10 @@ router.delete("/:idDel", async (req,res) => {
     }
 })
 
+router.put("/:productId", auth , async(req,res) => {
+    let productId = req.params.productId;
+    let plusArr = await ProductModel.findOne({_id:productId});
+    
+})
 
 module.exports = router;

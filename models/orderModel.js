@@ -5,11 +5,11 @@ const jwt = require("jsonwebtoken");
 
 const orderSchema = new mongoose.Schema(
   {
-    name: String, //Users collection
-    user_id: String, //Users collection
+    name: String, // Users collection
+    user_id: String, // Users collection
     city: String,
     address:String,
-    products_ar: Array, //Products collection
+    products_ar: Array, // Products collection
     isPresent: { type: Boolean, default:false},
     delivery_msg: String,
     phone:String
